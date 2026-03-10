@@ -1,51 +1,17 @@
-import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
-abstract class Room {
-    String type;
-    double price;
+class Reservation {
+    String guestName;
+    String roomType;
 
-    Room(String type, double price) {
-        this.type = type;
-        this.price = price;
+    Reservation(String guestName, String roomType) {
+        this.guestName = guestName;
+        this.roomType = roomType;
     }
 
-    void displayDetails() {
-        System.out.println("Room Type: " + type);
-        System.out.println("Price: $" + price);
-    }
-}
-
-class SingleRoom extends Room {
-    SingleRoom() {
-        super("Single Room", 100);
-    }
-}
-
-class DoubleRoom extends Room {
-    DoubleRoom() {
-        super("Double Room", 180);
-    }
-}
-
-class SuiteRoom extends Room {
-    SuiteRoom() {
-        super("Suite Room", 300);
-    }
-}
-
-class RoomInventory {
-
-    private HashMap<String, Integer> inventory;
-
-    public RoomInventory() {
-        inventory = new HashMap<>();
-        inventory.put("Single Room", 5);
-        inventory.put("Double Room", 3);
-        inventory.put("Suite Room", 0);
-    }
-
-    public int getAvailability(String roomType) {
-        return inventory.getOrDefault(roomType, 0);
+    void display() {
+        System.out.println("Guest: " + guestName + " | Room Type: " + roomType);
     }
 }
 
@@ -53,34 +19,20 @@ public class Main {
 
     public static void main(String[] args) {
 
-        RoomInventory inventory = new RoomInventory();
+        Queue<Reservation> bookingQueue = new LinkedList<>();
 
-        Room single = new SingleRoom();
-        Room doubleRoom = new DoubleRoom();
-        Room suite = new SuiteRoom();
+        bookingQueue.add(new Reservation("Alice", "Single Room"));
+        bookingQueue.add(new Reservation("Bob", "Double Room"));
+        bookingQueue.add(new Reservation("Charlie", "Suite Room"));
 
         System.out.println("Book My Stay - Hotel Booking System");
-        System.out.println("Version 4.1");
+        System.out.println("Version 5.1");
         System.out.println();
-        System.out.println("Available Rooms:");
+        System.out.println("Booking Requests (First-Come-First-Served):");
         System.out.println();
 
-        if (inventory.getAvailability("Single Room") > 0) {
-            single.displayDetails();
-            System.out.println("Available: " + inventory.getAvailability("Single Room"));
-            System.out.println();
-        }
-
-        if (inventory.getAvailability("Double Room") > 0) {
-            doubleRoom.displayDetails();
-            System.out.println("Available: " + inventory.getAvailability("Double Room"));
-            System.out.println();
-        }
-
-        if (inventory.getAvailability("Suite Room") > 0) {
-            suite.displayDetails();
-            System.out.println("Available: " + inventory.getAvailability("Suite Room"));
-            System.out.println();
+        for (Reservation r : bookingQueue) {
+            r.display();
         }
     }
 }
