@@ -1,80 +1,49 @@
-abstract class Room {
-    private String roomType;
-    private int bedCount;
-    private double pricePerNight;
-    // Static representation of availability (true = available, false = booked)
-    protected boolean isAvailable;
+import java.util.HashMap;
 
-    public Room(String roomType, int bedCount, double pricePerNight, boolean isAvailable) {
-        this.roomType = roomType;
-        this.bedCount = bedCount;
-        this.pricePerNight = pricePerNight;
-        this.isAvailable = isAvailable;
+class RoomInventory {
+
+    private HashMap<String, Integer> inventory;
+
+    public RoomInventory() {
+        inventory = new HashMap<>();
+        inventory.put("Single Room", 5);
+        inventory.put("Double Room", 3);
+        inventory.put("Suite Room", 2);
     }
 
-    // Abstract method to force specific room behavior
-    public abstract void displayRoomDetails();
-
-    // Getters
-    public String getRoomType() { return roomType; }
-    public int getBedCount() { return bedCount; }
-    public double getPricePerNight() { return pricePerNight; }
-    public boolean isAvailable() { return isAvailable; }
-}
-
-class SingleRoom extends Room {
-    public SingleRoom(boolean isAvailable) {
-        super("Single Room", 1, 100.0, isAvailable);
+    public int getAvailability(String roomType) {
+        return inventory.getOrDefault(roomType, 0);
     }
 
-    @Override
-    public void displayRoomDetails() {
-        System.out.println(getRoomType() + " | Beds: " + getBedCount() +
-                " | Price: $" + getPricePerNight() +
-                " | Available: " + isAvailable());
-    }
-}
-
-class DoubleRoom extends Room {
-    public DoubleRoom(boolean isAvailable) {
-        super("Double Room", 2, 180.0, isAvailable);
+    public void updateAvailability(String roomType, int count) {
+        inventory.put(roomType, count);
     }
 
-    @Override
-    public void displayRoomDetails() {
-        System.out.println(getRoomType() + " | Beds: " + getBedCount() +
-                " | Price: $" + getPricePerNight() +
-                " | Available: " + isAvailable());
-    }
-}
-
-class SuiteRoom extends Room {
-    public SuiteRoom(boolean isAvailable) {
-        super("Suite Room", 2, 350.0, isAvailable);
-    }
-
-    @Override
-    public void displayRoomDetails() {
-        System.out.println(getRoomType() + " | Beds: " + getBedCount() +
-                " | Price: $" + getPricePerNight() +
-                " | Available: " + isAvailable());
+    public void displayInventory() {
+        for (String roomType : inventory.keySet()) {
+            System.out.println(roomType + " Available: " + inventory.get(roomType));
+        }
     }
 }
 
 public class Main {
+
     public static void main(String[] args) {
-        System.out.println("--- Book My Stay App: Room Inventory ---");
 
-        // Initialize room objects with static availability
-        Room room1 = new SingleRoom(true);  // Available
-        Room room2 = new DoubleRoom(true);  // Available
-        Room room3 = new SuiteRoom(false);  // Booked
+        RoomInventory inventory = new RoomInventory();
 
-        // Display room details
-        room1.displayRoomDetails();
-        room2.displayRoomDetails();
-        room3.displayRoomDetails();
+        System.out.println("Book My Stay - Hotel Booking System");
+        System.out.println("Version 3.1");
+        System.out.println();
 
-        System.out.println("----------------------------------------");
+        inventory.displayInventory();
+
+        System.out.println();
+        System.out.println("Updating Single Room availability...");
+
+        inventory.updateAvailability("Single Room", 4);
+
+        System.out.println();
+        inventory.displayInventory();
     }
 }
