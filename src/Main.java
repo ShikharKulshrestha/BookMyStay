@@ -2,7 +2,7 @@ abstract class Room {
     private String roomType;
     private int bedCount;
     private double pricePerNight;
-    // Static representation of availability (true = available, false = booked)
+   
     protected boolean isAvailable;
 
     public Room(String roomType, int bedCount, double pricePerNight, boolean isAvailable) {
@@ -12,10 +12,10 @@ abstract class Room {
         this.isAvailable = isAvailable;
     }
 
-    // Abstract method to force specific room behavior
+    
     public abstract void displayRoomDetails();
 
-    // Getters
+   
     public String getRoomType() { return roomType; }
     public int getBedCount() { return bedCount; }
     public double getPricePerNight() { return pricePerNight; }
@@ -65,12 +65,12 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("--- Book My Stay App: Room Inventory ---");
 
-        // Initialize room objects with static availability
+        
         Room room1 = new SingleRoom(true);  // Available
         Room room2 = new DoubleRoom(true);  // Available
         Room room3 = new SuiteRoom(false);  // Booked
 
-        // Display room details
+        
         room1.displayRoomDetails();
         room2.displayRoomDetails();
         room3.displayRoomDetails();
